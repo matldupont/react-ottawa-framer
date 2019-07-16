@@ -11,5 +11,8 @@
 	"framer": {
 		"id": "95966005-a0db-4c65-887c-e475db578cad"
 	},
-	"author": "Mat Dupont"
+	"author": "Mat Dupont",
+	"dependencies": {
+		"framer-motion": "^1.2.3"
+	}
 }
