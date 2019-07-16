@@ -1,12 +1,14 @@
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import "./styles.css";
 
 // Open Preview (CMD + P)
 // API Reference: https://www.framer.com/api
 
 export function Logo() {
-  console.log("mount logo");
+  // const [hovering, setHovering] = React.useState(false);
+  const controls = useAnimation();
+
   const logo = {
     hidden: {
       opacity: 0,
@@ -59,6 +61,8 @@ export function Logo() {
     }
   ];
 
+  controls.start("visible");
+
   return (
     <motion.svg
       width="100%"
@@ -66,15 +70,25 @@ export function Logo() {
       viewBox="0 0 535 478"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      onHoverStart={() => {
+        controls.start("hidden", {
+          default: { duration: 1, ease: "easeInOut" }
+        });
+      }}
+      onHoverEnd={() =>
+        controls.start("visible", {
+          default: { duration: 1, ease: "easeInOut" }
+        })
+      }
     >
       <g id="ReactOttawaLogo" transform="translate(-81.000000, -124.000000)">
         <g id="ReactOttawa" transform="translate(81.000000, 77.000000)">
           {rings.map(({ id, d, transform }) => (
             <motion.path
               key={id}
-              variants={logo}
               initial="hidden"
-              animate="visible"
+              variants={logo}
+              animate={controls}
               style={ringStyles}
               id={id}
               transform={transform}
@@ -88,7 +102,7 @@ export function Logo() {
           <motion.path
             variants={logo}
             initial="hidden"
-            animate="visible"
+            animate={controls}
             id="Oval-2"
             d="M234.3584071,286.5a33.1415929,33.1487603 0 1,0 66.2831858,0a33.1415929,33.1487603 0 1,0 -66.2831858,0"
             style={nucleusStyle}
